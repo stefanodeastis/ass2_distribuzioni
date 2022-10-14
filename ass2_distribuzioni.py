@@ -17,8 +17,10 @@
 """Second assignment for the CMEPDA course, 2022/23.
 """
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy.interpolate import InterpolatedUnivariateSpline
-
+MEAN=0
+DEVSTD=1
 class ProbabilityDensityFunction(InterpolatedUnivariateSpline):
     '''Class describing a probability density function.
 
@@ -66,5 +68,31 @@ class ProbabilityDensityFunction(InterpolatedUnivariateSpline):
         """
         return self.ppf(np.random.uniform(size=size))
 
+def norm_gauss(x,mean,devstd):
+    return np.e**(-(x-mean)**2/2*devstd**2)/np.sqrt(2*np.pi*devstd)
+
 if __name__ == '__main__':
-    print('ok')
+    '''
+    x=np.linspace(MEAN-5*DEVSTD,MEAN+5*DEVSTD,100)
+    y=norm_gauss(x,MEAN,DEVSTD)
+    plt.figure(1)
+    plt.plot(x,y,'o')
+    pdf=ProbabilityDensityFunction(x, y)
+    rnd= pdf.rnd(1000000)
+    plt.plot(x,y)
+    plt.figure(2)
+    plt.hist(rnd, bins=200)
+    '''
+    plt.figure(3)
+    x = np.linspace(0., 1., 50000)
+    y = np.zeros(x.shape)
+    y[x <= 0.5] = 2. * x[x <= 0.5]
+    y[x > 0.75] = 3.
+    pdf=ProbabilityDensityFunction(x, y,1)
+    rnd= pdf.rnd(10000)
+    plt.plot(x,y)
+    plt.plot(x,pdf.cdf(x))
+    plt.plot(x,pdf.ppf(x))
+    plt.figure(4)
+    plt.hist(rnd, bins=200)
+    plt.show()

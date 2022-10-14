@@ -51,9 +51,8 @@ class TestPdf(unittest.TestCase):
         pdf = ProbabilityDensityFunction(x, y)
 
 
-        #plt.figure('Triangular pdf')
-        #plt.plot(x, pdf(x))
-        '''
+        plt.figure('Triangular pdf')
+        plt.plot(x, pdf(x))
         plt.figure('Triangular cdf')
         plt.plot(x, pdf.cdf(x))
         plt.figure('Triangular ppf')
@@ -80,7 +79,7 @@ class TestPdf(unittest.TestCase):
         r = pdf.rnd(1000000)
         plt.figure('Fancy random variate')
         plt.hist(r, bins=200)
-        '''
+        plt.show()
 
 if __name__ == '__main__':
     unittest.main(exit=not sys.flags.interactive)
